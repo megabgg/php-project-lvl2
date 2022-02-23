@@ -11,7 +11,7 @@
       "email": "megabgg@yandex.ru"
     }
   ],
-  "description": "difference calculator - second project on hexlet",
+  "description": "Difference calculator - second project on hexlet",
   "license": "MIT",
   "scripts": {
     "test": "phpunit tests"
