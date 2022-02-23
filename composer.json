@@ -1,5 +1,6 @@
 {
   "name": "megabgg/php-project-lvl2",
+  "license": "MIT",
   "bin": [
     "bin/gendiff"
   ],
@@ -10,7 +11,7 @@
       "email": "megabgg@yandex.ru"
     }
   ],
-  "description": "hexlet php-package",
+  "description": "difference calculator",
   "license": "MIT",
   "scripts": {
     "test": "phpunit tests"
