@@ -73,7 +73,8 @@ $ bin/gendiff pathToFile1 pathToFile2 --type json
 ```
 <?php
 use function CalcDiff\genDiff;
-$diff = genDiff($pathToFile1, $pathToFile2);
+$format = 'plain'; // plain | stylish | json
+$diff = genDiff($pathToFile1, $pathToFile2, $format);
 print_r($diff);
 ```
 
