@@ -1,6 +1,7 @@
 {
   "name": "megabgg/php-project-lvl2",
   "license": "MIT",
+  "minimum-stability": "dev",
   "bin": [
     "bin/gendiff"
   ],
