@@ -12,7 +12,6 @@
     }
   ],
   "description": "Difference calculator - second project on hexlet",
-  "license": "MIT",
   "scripts": {
     "test": "phpunit tests"
   },

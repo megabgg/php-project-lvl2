@@ -2,12 +2,12 @@
 
 namespace CalcDiff\Layers\Tree;
 
+use Exception;
+
 use function CalcDiff\Layers\Node\makeNode;
 use function CalcDiff\Layers\Node\makeChildNode;
 use function CalcDiff\Layers\Node\getName;
 use function CalcDiff\Layers\Node\getType;
-use function CalcDiff\Layers\Node\getOldValue;
-use function CalcDiff\Layers\Node\getNewValue;
 use function CalcDiff\Layers\Node\getChildren;
 use function Funct\Collection\flattenAll;
 
@@ -15,13 +15,13 @@ const ADDED = 'added';
 const REMOVED = 'removed';
 const NESTED = 'nested';
 const UPDATED = 'updated';
-const NOTCHANGED = 'notChanged';
+const NOT_CHANGED = 'notChanged';
 
-function makeTree($sourceBefore, $sourceAfter)
+function makeTree(array $sourceBefore, array $sourceAfter): array
 {
     $keys = array_keys(array_merge($sourceBefore, $sourceAfter));
     sort($keys);
-    $result = array_map(function ($key) use ($sourceBefore, $sourceAfter) {
+    return array_map(function ($key) use ($sourceBefore, $sourceAfter) {
         if (!array_key_exists($key, $sourceBefore)) {
             $node = makeNode($key, ADDED, null, $sourceAfter[$key]);
         } elseif (!array_key_exists($key, $sourceAfter)) {
@@ -31,17 +31,15 @@ function makeTree($sourceBefore, $sourceAfter)
         } elseif ($sourceBefore[$key] !== $sourceAfter[$key]) {
             $node = makeNode($key, UPDATED, $sourceBefore[$key], $sourceAfter[$key]);
         } else {
-            $node = makeNode($key, NOTCHANGED, $sourceBefore[$key], $sourceAfter[$key]);
+            $node = makeNode($key, NOT_CHANGED, $sourceBefore[$key], $sourceAfter[$key]);
         }
         return $node;
     }, $keys);
-
-    return $result;
 }
 
-function applyFormatter($tree, $formatter)
+function applyFormatter(array $tree, array $formatter): string
 {
-    if (empty($formatter['useNodes']) || !$formatter['useNodes']) {
+    if (empty($formatter['useNodes'])) {
         $formattedElements = createFormattedElements($tree, $formatter);
         $flattenElements = flattenAll($formattedElements);
         return $formatter['collectString']($flattenElements);
@@ -50,30 +48,21 @@ function applyFormatter($tree, $formatter)
     return $formatter['collectString']($tree);
 }
 
-function createFormattedElements($tree, $formatter, $path = [])
+function createFormattedElements(array $tree, array $formatter, array $path = []): array
 {
     return array_reduce($tree, function ($res, $node) use ($formatter, $path) {
         $path[] = getName($node);
         $nested = ($children = getChildren($node)) ? createFormattedElements($children, $formatter, $path) : null;
         $element = $formatter['makeElement']($node, $nested, $path);
 
-        switch (getType($node)) {
-            case ADDED:
-                $item = $formatter['formatAdded']($element);
-                break;
-            case REMOVED:
-                $item = $formatter['formatRemoved']($element);
-                break;
-            case NOTCHANGED:
-                $item = $formatter['formatNotChanged']($element);
-                break;
-            case UPDATED:
-                $item = $formatter['formatUpdated']($element);
-                break;
-            case NESTED:
-                $item = $formatter['formatNested']($element);
-                break;
-        }
+        $item = match (getType($node)) {
+            ADDED => $formatter['formatAdded']($element),
+            REMOVED => $formatter['formatRemoved']($element),
+            NOT_CHANGED => $formatter['formatNotChanged']($element),
+            UPDATED => $formatter['formatUpdated']($element),
+            NESTED => $formatter['formatNested']($element),
+            default => throw new Exception("Node type not defined"),
+        };
 
         return !empty($item) ? array_merge($res, $item) : $res;
     }, []);

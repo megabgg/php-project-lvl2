@@ -23,11 +23,7 @@ DOC;
 
 $result = Docopt::handle($doc, array('version' => 'Generate diff 1.0'));
 
-$pathFirstFile = realpath($result["<firstFile>"]);
-$pathSecondFile = realpath($result["<secondFile>"]);
-$format = $result["--format"];
-
-print_r(genDiff($pathFirstFile, $pathSecondFile, $format));
+print_r(genDiff($result["<firstFile>"], $result["<secondFile>"], $result["--format"]));
 
 
 

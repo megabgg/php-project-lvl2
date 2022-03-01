@@ -8,7 +8,7 @@ use function CalcDiff\Layers\Node\getNewValue;
 
 const SEPARATOR = "\n";
 
-function getMapForPlain()
+function getMapForPlain(): array
 {
     return [
         'makeElement' => function ($node, $nested, $path) {
@@ -29,38 +29,38 @@ function getMapForPlain()
     ];
 }
 
-function formatAdded($element)
+function formatAdded(array $element): array
 {
     return ["Property '{$element['name']}' was added with value: {$element['newValue']}"];
 }
 
-function formatRemoved($element)
+function formatRemoved(array $element): array
 {
     return ["Property '{$element['name']}' was removed"];
 }
 
-function formatNotChanged($element)
+function formatNotChanged(array $element): array
 {
     return [];
 }
 
-function formatUpdated($element)
+function formatUpdated(array $element): array
 {
     return ["Property '{$element['name']}' was updated. From {$element['oldValue']} to {$element['newValue']}"];
 }
 
-function formatNested($element)
+function formatNested(array $element): array
 {
     return [$element['nested']];
 }
 
-function collectString($elements)
+function collectString(array $elements): string
 {
     return implode(SEPARATOR, $elements);
 }
 
 
-function prepareValue($value)
+function prepareValue(mixed $value): string
 {
     return is_array($value) ? '[complex value]' : (is_string($value) ? "'{$value}'" : boolToString($value));
 }

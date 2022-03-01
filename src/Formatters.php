@@ -2,25 +2,23 @@
 
 namespace CalcDiff\Formatters;
 
+use Exception;
+
 use function CalcDiff\Formatters\Stylish\getMapForStylish;
 use function CalcDiff\Formatters\Plain\getMapForPlain;
 use function CalcDiff\Formatters\Json\getMapForJson;
 
-function getFormatter($type)
+function getFormatter(string $format): array
 {
-    switch ($type) :
-        case 'plain':
-            return getMapForPlain();
-        case 'stylish':
-            return getMapForStylish();
-        case 'json':
-            return getMapForJson();
-    endswitch;
-
-    return null;
+    return match ($format) {
+        'plain' => getMapForPlain(),
+        'stylish' => getMapForStylish(),
+        'json' => getMapForJson(),
+        default => throw new Exception("Format not defined"),
+    };
 }
 
-function boolToString($value)
+function boolToString(mixed $value): string
 {
     return is_bool($value) ? ($value === true ? 'true' : 'false') : (is_null($value) ? 'null' : $value);
 }

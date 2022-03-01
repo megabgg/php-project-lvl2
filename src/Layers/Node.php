@@ -2,7 +2,7 @@
 
 namespace CalcDiff\Layers\Node;
 
-function makeNode(string $name, string $type, $oldValue, $newValue)
+function makeNode(string $name, string $type, mixed $oldValue, mixed $newValue): array
 {
     return [
         "name" => $name,
@@ -12,7 +12,7 @@ function makeNode(string $name, string $type, $oldValue, $newValue)
     ];
 }
 
-function makeChildNode(string $name, string $type, $children)
+function makeChildNode(string $name, string $type, array $children): array
 {
     return [
         "name" => $name,
@@ -22,27 +22,27 @@ function makeChildNode(string $name, string $type, $children)
 }
 
 
-function getName($node)
+function getName(array $node): string
 {
     return $node['name'];
 }
 
-function getType($node)
+function getType(array $node): string
 {
     return $node['type'];
 }
 
-function getOldValue($node)
+function getOldValue(array $node): mixed
 {
     return $node['oldValue'] ?? null;
 }
 
-function getNewValue($node)
+function getNewValue(array $node): mixed
 {
     return $node['newValue'] ?? null;
 }
 
-function getChildren($node)
+function getChildren(array $node): mixed
 {
     return $node['children'] ?? null;
 }

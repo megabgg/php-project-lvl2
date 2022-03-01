@@ -10,7 +10,7 @@ use function CalcDiff\Layers\Node\getNewValue;
 const SPACES = '    ';
 const SEPARATOR = "\n";
 
-function getMapForStylish()
+function getMapForStylish(): array
 {
     return [
         'makeElement' => function ($node, $nested, $path) {
@@ -33,22 +33,22 @@ function getMapForStylish()
 }
 
 
-function formatAdded($element)
+function formatAdded(array $element): array
 {
     return ["{$element['space']}  + {$element['name']}: {$element['newValue']}"];
 }
 
-function formatRemoved($element)
+function formatRemoved(array $element): array
 {
     return ["{$element['space']}  - {$element['name']}: {$element['oldValue']}"];
 }
 
-function formatNotChanged($element)
+function formatNotChanged(array $element): array
 {
     return ["{$element['space']}    {$element['name']}: {$element['newValue']}"];
 }
 
-function formatUpdated($element)
+function formatUpdated(array $element): array
 {
     return [
         "{$element['space']}  - {$element['name']}: {$element['oldValue']}",
@@ -56,18 +56,18 @@ function formatUpdated($element)
     ];
 }
 
-function formatNested($element)
+function formatNested(array $element): array
 {
     return ["{$element['space']}    {$element['name']}: {", $element['nested'], "{$element['space']}    }"];
 }
 
-function collectString($elements)
+function collectString(array $elements): string
 {
     return "{" . SEPARATOR . implode(SEPARATOR, $elements) . SEPARATOR . "}" . SEPARATOR;
 }
 
 
-function prepareValue($value, $level)
+function prepareValue(mixed $value, int $level): string
 {
     $space = calcSpace($level);
     if (!is_array($value)) {
@@ -80,7 +80,7 @@ function prepareValue($value, $level)
     return "{" . $res . SEPARATOR . "$space    }";
 }
 
-function calcSpace($level)
+function calcSpace(int $level): string
 {
     return str_repeat(SPACES, $level);
 }

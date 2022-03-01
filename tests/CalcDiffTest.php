@@ -8,7 +8,7 @@ use function CalcDiff\genDiff;
 
 class CalcDiffTest extends TestCase
 {
-    public function addDataProvider()
+    public function addDataProvider(): array
     {
         return [
             ['before.json', 'after.json', 'stylish', 'diffStylish'],
@@ -24,7 +24,7 @@ class CalcDiffTest extends TestCase
      * @dataProvider addDataProvider
      */
 
-    public function testGenDiff($nameBefore, $nameAfter, $format, $nameResult)
+    public function testGenDiff(string $nameBefore, string $nameAfter, string $format, string $nameResult): void
     {
         $pathToFile1 = $this->genPath($nameBefore);
         $pathToFile2 = $this->genPath($nameAfter);
@@ -34,9 +34,9 @@ class CalcDiffTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    private function genPath($baseName)
+    private function genPath(string $baseName): string
     {
         $dir = 'tests/fixtures';
-        return realpath("$dir/$baseName");
+        return "$dir/$baseName";
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CalcDiff\Formatters\Json;
 
-function getMapForJson()
+function getMapForJson(): array
 {
     return [
         'useNodes' => true,
