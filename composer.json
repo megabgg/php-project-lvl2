@@ -40,7 +40,7 @@
   },
   "require-dev": {
     "psy/psysh": "@stable",
-    "phpstan/phpstan-phpunit": "^0.12.22",
+    "phpstan/phpstan-phpunit": "0.12.22",
     "phpstan/extension-installer": "^1.1.0",
     "symfony/var-dumper": "^v4.4.37",
     "phpunit/phpunit": "^9.5.14",
