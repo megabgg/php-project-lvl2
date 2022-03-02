@@ -63,7 +63,7 @@ function formatNested(array $element): array
 
 function collectString(array $elements): string
 {
-    return "{" . SEPARATOR . implode(SEPARATOR, $elements) . SEPARATOR . "}" . SEPARATOR;
+    return "{" . SEPARATOR . implode(SEPARATOR, $elements) . SEPARATOR . "}";
 }
 
 
