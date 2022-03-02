@@ -9,7 +9,7 @@ use function CalcDiff\Layers\Tree\makeTree;
 use function CalcDiff\Formatters\getFormatter;
 use function CalcDiff\Layers\Tree\applyFormatter;
 
-function genDiff(string $pathBefore, string $pathAfter, string $format = 'json'): string
+function genDiff(string $pathBefore, string $pathAfter, string $format = 'stylish'): string
 {
     $rawDataBefore = getRawData($pathBefore);
     $rawDataAfter = getRawData($pathAfter);

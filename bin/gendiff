@@ -18,7 +18,7 @@ Usage:
 Options:
   -h --help                     Show this screen
   -v --version                  Show version
-  --format <fmt>                Report format [default: json]
+  --format <fmt>                Report format [default: stylish]
 DOC;
 
 $result = Docopt::handle($doc, array('version' => 'Generate diff 1.0'));
