@@ -9,6 +9,7 @@ function parse(string $rawData, string $type): array
 {
     return match ($type) {
         'yml' => yamlParse($rawData),
+        'yaml' => yamlParse($rawData),
         'json' => jsonParse($rawData),
         default => throw new Exception("Type not defined"),
     };
