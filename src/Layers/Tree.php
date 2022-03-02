@@ -9,7 +9,6 @@ use function CalcDiff\Layers\Node\makeChildNode;
 use function CalcDiff\Layers\Node\getName;
 use function CalcDiff\Layers\Node\getType;
 use function CalcDiff\Layers\Node\getChildren;
-use function Funct\Collection\flattenAll;
 
 const ADDED = 'added';
 const REMOVED = 'removed';
@@ -66,4 +65,19 @@ function createFormattedElements(array $tree, array $formatter, array $path = []
 
         return !empty($item) ? array_merge($res, $item) : $res;
     }, []);
+}
+
+function flattenAll($collection)
+{
+    $result = [];
+
+    foreach ($collection as $value) {
+        if (is_array($value)) {
+            $result = array_merge($result, flattenAll($value));
+        } else {
+            $result[] = $value;
+        }
+    }
+
+    return $result;
 }
