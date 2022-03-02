@@ -12,11 +12,6 @@ class CalcDiffTest extends TestCase
     {
         return [
             ['before.json', 'after.json', 'stylish', 'diffStylish'],
-            ['before.yml', 'after.yml', 'stylish', 'diffStylish'],
-            ['before.json', 'after.json', 'plain', 'diffPlain'],
-            ['before.yml', 'after.yml', 'plain', 'diffPlain'],
-            ['before.json', 'after.json', 'json', 'diffJson'],
-            ['before.yml', 'after.yml', 'json', 'diffJson']
         ];
     }
 
