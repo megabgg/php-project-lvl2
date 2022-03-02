@@ -67,7 +67,7 @@ function createFormattedElements(array $tree, array $formatter, array $path = []
     }, []);
 }
 
-function flattenAll($collection)
+function flattenAll(array $collection): array
 {
     $result = [];
 
