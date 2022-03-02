@@ -1,5 +1,5 @@
 {
-  "name": "megabgg/php-project-lvl2",
+  "name": "hexlet/code",
   "license": "MIT",
   "bin": [
     "bin/gendiff"
