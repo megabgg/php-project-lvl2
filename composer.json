@@ -5,6 +5,8 @@
     "bin/gendiff"
   ],
   "type": "library",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "authors": [
     {
       "name": "Andrey Gorshkov",
