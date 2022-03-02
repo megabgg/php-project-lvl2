@@ -1,6 +1,6 @@
 <?php
 
-namespace CalcDiff;
+namespace Differ\Differ;
 
 use Exception;
 
