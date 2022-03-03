@@ -50,8 +50,7 @@ function applyFormatter(array $tree, array $formatter): string
 function createFormattedElements(array $tree, array $formatter, array $path = []): array
 {
     return array_reduce($tree, function ($res, $node) use ($formatter, $path) {
-        $name = getName($node);
-        $path[] = $name;
+        $path[] = getName($node);
         $children = getChildren($node);
         $nested = is_array($children) ? createFormattedElements($children, $formatter, $path) : null;
         $element = $formatter['makeElement']($node, $nested, $path);
@@ -71,15 +70,13 @@ function createFormattedElements(array $tree, array $formatter, array $path = []
 
 function flattenAll(array $collection): array
 {
-    $result = [];
-
-    foreach ($collection as $value) {
+    return array_reduce($collection, function ($result, $value) {
         if (is_array($value)) {
-            $result = array_merge($result, flattenAll($value));
+            $children = flattenAll($value);
+            $result = array_merge($result, $children);
         } else {
             $result[] = $value;
         }
-    }
-
-    return $result;
+        return $result;
+    }, []);
 }
