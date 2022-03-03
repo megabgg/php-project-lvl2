@@ -9,6 +9,8 @@ use function CalcDiff\Layers\Node\makeChildNode;
 use function CalcDiff\Layers\Node\getName;
 use function CalcDiff\Layers\Node\getType;
 use function CalcDiff\Layers\Node\getChildren;
+use function Functional\flatten;
+use function Functional\sort;
 
 const ADDED = 'added';
 const REMOVED = 'removed';
@@ -19,7 +21,7 @@ const NOT_CHANGED = 'notChanged';
 function makeTree(array $sourceBefore, array $sourceAfter): array
 {
     $keys = array_keys(array_merge($sourceBefore, $sourceAfter));
-    sort($keys);
+    $sortedKeys = sort($keys, fn($a, $b) => $a <=> $b);
     return array_map(function ($key) use ($sourceBefore, $sourceAfter) {
         if (!array_key_exists($key, $sourceBefore)) {
             $node = makeNode($key, ADDED, null, $sourceAfter[$key]);
@@ -33,14 +35,14 @@ function makeTree(array $sourceBefore, array $sourceAfter): array
             $node = makeNode($key, NOT_CHANGED, $sourceBefore[$key], $sourceAfter[$key]);
         }
         return $node;
-    }, $keys);
+    }, $sortedKeys);
 }
 
 function applyFormatter(array $tree, array $formatter): string
 {
     if (array_key_exists('useNodes', $formatter) === false || $formatter['useNodes'] === false) {
         $formattedElements = createFormattedElements($tree, $formatter);
-        $flattenElements = flattenAll($formattedElements);
+        $flattenElements = flatten($formattedElements);
         return $formatter['collectString']($flattenElements);
     }
 
@@ -66,18 +68,5 @@ function createFormattedElements(array $tree, array $formatter, array $path = []
         };
 
         return array_merge($res, $item);
-    }, []);
-}
-
-function flattenAll(array $collection): array
-{
-    return array_reduce($collection, function ($result, $value) {
-        if (is_array($value)) {
-            $children = flattenAll($value);
-            $result = array_merge($result, $children);
-        } else {
-            $result[] = $value;
-        }
-        return $result;
     }, []);
 }

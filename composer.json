@@ -34,7 +34,8 @@
     "nesbot/carbon": "^2.57.0",
     "symfony/string": "^5.4.3",
     "docopt/docopt": "^1.0.4",
-    "symfony/yaml": "^6.0.3"
+    "symfony/yaml": "^6.0.3",
+    "lstrojny/functional-php": "^1.17"
   },
   "require-dev": {
     "psy/psysh": "@stable",
