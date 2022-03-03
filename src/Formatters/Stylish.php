@@ -75,9 +75,9 @@ function prepareValue(mixed $value, int $level): string
     }
     $result = array_map(function ($key, $value) use ($level, $space) {
 
-        $level = $level + 1;
+        $levelNew = $level + 1;
 
-        $preparedValue = prepareValue($value, $level);
+        $preparedValue = prepareValue($value, $levelNew);
         return SEPARATOR . "$space        $key: " . $preparedValue;
     }, array_keys($value), $value);
     $resultString = implode('', $result);
