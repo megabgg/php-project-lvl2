@@ -73,13 +73,14 @@ function prepareValue(mixed $value, int $level): string
     if (!is_array($value)) {
         return boolToString($value);
     }
-    $res = implode('', array_map(function ($key, $value) use ($level, $space) {
+    $result = array_map(function ($key, $value) use ($level, $space) {
         $level += 1;
         $preparedValue = prepareValue($value, $level);
         return SEPARATOR . "$space        $key: " . $preparedValue;
-    }, array_keys($value), $value));
+    }, array_keys($value), $value);
+    $resultString = implode('', $result);
 
-    return "{" . $res . SEPARATOR . "$space    }";
+    return "{" . $resultString . SEPARATOR . "$space    }";
 }
 
 function calcSpace(int $level): string
