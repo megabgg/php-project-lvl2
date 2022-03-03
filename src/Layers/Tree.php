@@ -66,7 +66,7 @@ function createFormattedElements(array $tree, array $formatter, array $path = []
             NESTED => $formatter['formatNested']($element),
             default => throw new Exception("Node type not defined"),
         };
-        unset($newPath);
-        return array_merge($res, $item);
+        $result = array_merge($res, $item);
+        return $result;
     }, []);
 }
