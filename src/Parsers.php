@@ -17,10 +17,14 @@ function parse(string $rawData, string $type): array
 
 function jsonParse(string $rawData): array
 {
-    return json_decode($rawData, true) ?: throw new Exception("Json not valid");
+    $result = json_decode($rawData, true);
+    if (is_null($result)) {
+        throw new Exception("Json cannot be decoded or if the encoded * data is deeper than the recursion limit.");
+    }
+    return $result;
 }
 
 function yamlParse(string $rawData): array
 {
-    return Yaml::parse($rawData) ?: throw new Exception("Yaml not valid");
+    return Yaml::parse($rawData);
 }

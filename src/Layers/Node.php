@@ -42,7 +42,7 @@ function getNewValue(array $node): mixed
     return $node['newValue'] ?? null;
 }
 
-function getChildren(array $node): mixed
+function getChildren(array $node): ?array
 {
-    return $node['children'] ?? null;
+    return array_key_exists('children', $node) ? $node['children'] : null;
 }

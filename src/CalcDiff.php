@@ -26,18 +26,18 @@ function formatDiff(array $tree, string $format): string
 function getRawData(string $path): array
 {
     $absolutePath = realpath($path);
-    if (empty($absolutePath)) {
-        throw new Exception("Path not be empty");
+    if ($absolutePath === false) {
+        throw new Exception("Path failure");
     }
-    if (!file_exists($absolutePath)) {
-        throw new Exception("File not found");
+    if (file_exists($absolutePath) === false) {
+        throw new Exception("File not exists");
     }
     $fileContents = file_get_contents($absolutePath);
     if ($fileContents === false) {
         throw new Exception("Cannot access '$absolutePath' to read contents.");
     }
     $contentType = pathinfo($absolutePath, PATHINFO_EXTENSION);
-    if (empty($contentType)) {
+    if ($contentType === '') {
         throw new Exception("File type cannot be empty");
     }
     return parse($fileContents, $contentType);

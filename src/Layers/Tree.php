@@ -38,7 +38,7 @@ function makeTree(array $sourceBefore, array $sourceAfter): array
 
 function applyFormatter(array $tree, array $formatter): string
 {
-    if (empty($formatter['useNodes'])) {
+    if (array_key_exists('useNodes', $formatter) === false || $formatter['useNodes'] === false) {
         $formattedElements = createFormattedElements($tree, $formatter);
         $flattenElements = flattenAll($formattedElements);
         return $formatter['collectString']($flattenElements);
@@ -50,8 +50,10 @@ function applyFormatter(array $tree, array $formatter): string
 function createFormattedElements(array $tree, array $formatter, array $path = []): array
 {
     return array_reduce($tree, function ($res, $node) use ($formatter, $path) {
-        $path[] = getName($node);
-        $nested = ($children = getChildren($node)) ? createFormattedElements($children, $formatter, $path) : null;
+        $name = getName($node);
+        $path[] = $name;
+        $children = getChildren($node);
+        $nested = is_array($children) ? createFormattedElements($children, $formatter, $path) : null;
         $element = $formatter['makeElement']($node, $nested, $path);
 
         $item = match (getType($node)) {
@@ -63,7 +65,7 @@ function createFormattedElements(array $tree, array $formatter, array $path = []
             default => throw new Exception("Node type not defined"),
         };
 
-        return !empty($item) ? array_merge($res, $item) : $res;
+        return array_merge($res, $item);
     }, []);
 }
 
