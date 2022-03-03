@@ -50,10 +50,11 @@ function applyFormatter(array $tree, array $formatter): string
 function createFormattedElements(array $tree, array $formatter, array $path = []): array
 {
     return array_reduce($tree, function ($res, $node) use ($formatter, $path) {
-        $path[] = getName($node);
+        $name = getName($node);
+        $newPath = array_merge($path, [$name]);
         $children = getChildren($node);
-        $nested = is_array($children) ? createFormattedElements($children, $formatter, $path) : null;
-        $element = $formatter['makeElement']($node, $nested, $path);
+        $nested = is_array($children) ? createFormattedElements($children, $formatter, $newPath) : null;
+        $element = $formatter['makeElement']($node, $nested, $newPath);
 
         $item = match (getType($node)) {
             ADDED => $formatter['formatAdded']($element),
