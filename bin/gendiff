@@ -5,7 +5,7 @@
 $autoloadPath = __DIR__ . '/../vendor/autoload.php';
 require_once $autoloadPath;
 
-use function CalcDiff\genDiff;
+use function Differ\Differ\genDiff;
 
 $doc = <<<DOC
 Generate diff
