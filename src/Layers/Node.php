@@ -44,5 +44,5 @@ function getNewValue(array $node): mixed
 
 function getChildren(array $node): ?array
 {
-    return array_key_exists('children', $node) ? $node['children'] : null;
+    return $node['children'] ?? null;
 }

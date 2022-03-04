@@ -57,7 +57,6 @@ function createFormattedElements(array $tree, array $formatter, array $path = []
         $children = getChildren($node);
         $nested = is_array($children) ? createFormattedElements($children, $formatter, $newPath) : null;
         $element = $formatter['makeElement']($node, $nested, $newPath);
-
         $item = match (getType($node)) {
             ADDED => $formatter['formatAdded']($element),
             REMOVED => $formatter['formatRemoved']($element),
@@ -66,7 +65,6 @@ function createFormattedElements(array $tree, array $formatter, array $path = []
             NESTED => $formatter['formatNested']($element),
             default => throw new Exception("Node type not defined"),
         };
-        $result = array_merge($res, $item);
-        return $result;
+        return array_merge($res, $item);
     }, []);
 }
